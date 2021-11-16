@@ -1,5 +1,5 @@
 {
-  "name": "@medondo/loopback-connector-postgresql",
+  "name": "loopback-connector-postgresql",
   "version": "5.4.0",
   "description": "Loopback PostgreSQL Connector",
   "engines": {
