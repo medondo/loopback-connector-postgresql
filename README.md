@@ -39,9 +39,38 @@ const config = {
   port: 5432,
   user: 'user',
   password: 'pass',
-  database: 'testdb',
+  database: 'testdb'
 };
 ```
+### Replications support
+
+To enable PG replicas add below pool configurations to the main config:
+
+```ts
+{
+    ...config,
+    replications: {
+        master: {
+            host:'localhost', 
+            port: 5432,
+            user: 'user',
+            password: 'pass',
+            database: 'testdb'
+        },
+        slaves: [
+            {
+                host:'localhost',
+                port: 5432,
+                user: 'user',
+                password: 'pass',
+                database: 'testdb-replica'
+            }
+        ]
+    }
+}
+```
+
+PG replicas are enabled using [pg-replica](https://www.npmjs.com/package/pg-replica) node package 
 
 <details><summary markdown="span"><strong>For LoopBack 3 users</strong></summary>
 
