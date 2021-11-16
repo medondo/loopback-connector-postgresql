@@ -1,5 +1,5 @@
 {
-  "name": "loopback-connector-postgresql",
+  "name": "@medondo/loopback-connector-postgresql",
   "version": "5.4.0",
   "description": "Loopback PostgreSQL Connector",
   "engines": {
@@ -52,6 +52,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/loopbackio/loopback-connector-postgresql.git"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.medondo.com/repository/npm-private/"
   },
   "license": "Artistic-2.0",
   "author": "IBM Corp."
