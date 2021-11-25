@@ -70,7 +70,7 @@ To enable PG replicas add below pool configurations to the main config:
 }
 ```
 
-PG replicas are enabled using [pg-replica](https://www.npmjs.com/package/pg-replica) node package 
+To explicitly force using `master` database pass `{forceMaster: true}` in sql query options.
 
 <details><summary markdown="span"><strong>For LoopBack 3 users</strong></summary>
 
