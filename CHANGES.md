@@ -1,3 +1,29 @@
+2022-09-29, Version 5.5.2
+=========================
+
+ * chore(deps): update actions/setup-node action to v3 (renovate[bot])
+
+ * chore(deps): update actions/checkout action to v3 (renovate[bot])
+
+ * chore(deps): add renovate.json (renovate[bot])
+
+ * fix: crash with blank `url` (Rifa Achrinza)
+
+
+2022-08-06, Version 5.5.1
+=========================
+
+ * fix: improve filter sanitisation (Rifa Achrinza)
+
+ * fix: debug prints the password in plain text (Francisco Buceta)
+
+ * docs: add SECURITY.md (Diana Lau)
+
+ * docs: update coc (Diana Lau)
+
+ * docs: add code of conduct (Diana Lau)
+
+
 2022-01-13, Version 5.5.0
 =========================
 
