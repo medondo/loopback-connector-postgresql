@@ -29,7 +29,6 @@
     "setup.sh"
   ],
   "dependencies": {
-    "@lukeed/wrr": "0.0.2",
     "async": "^3.2.0",
     "bluebird": "^3.4.6",
     "chalk": "^4.0.0",
