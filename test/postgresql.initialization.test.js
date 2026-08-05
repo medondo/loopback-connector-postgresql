@@ -9,6 +9,7 @@ const Promise = require('bluebird');
 const connector = require('..');
 const DataSource = require('loopback-datasource-juggler').DataSource;
 const should = require('should');
+const EventEmitter = require('events');
 
 // simple wrapper that uses JSON.parse(JSON.stringify()) as cheap clone
 function newConfig(withURL) {
@@ -110,5 +111,46 @@ describe('postgresql connector errors', function() {
     // send a fake error in and make sure it is bound to our listener
     dataSource.connector.pg.emit('error', new Error('fake error'), {fakeClient: true});
     errorsCaught.should.equal(1);
+  });
+
+  it('attaches a persistent onError listener to acquired clients', function() {
+    const settings = newConfig();
+    let errorsCaught = 0;
+    settings.onError = function(err) {
+      err.should.be.ok();
+      ++errorsCaught;
+    };
+
+    const dataSource = new DataSource(connector, settings);
+    const pool = dataSource.connector.pg;
+
+    const fakeClient = new EventEmitter();
+    pool.emit('acquire', fakeClient);
+    fakeClient.listenerCount('error').should.equal(1);
+
+    // re-acquiring the same physical client must not add a second listener
+    pool.emit('acquire', fakeClient);
+    fakeClient.listenerCount('error').should.equal(1);
+
+    // an error on a checked-out client reaches the handler instead of crashing
+    fakeClient.emit('error', new Error('fake error'));
+    errorsCaught.should.equal(1);
+  });
+
+  it('attaches onError to every replication pool', function() {
+    const settings = newConfig();
+    settings.onError = function() {};
+    settings.replications = {
+      master: newConfig(),
+      slaves: [newConfig(), newConfig()],
+    };
+
+    const dataSource = new DataSource(connector, settings);
+
+    dataSource.connector.pgPools.length.should.equal(3);
+    dataSource.connector.pgPools.forEach(function(pool) {
+      pool.listenerCount('error').should.equal(1);
+      pool.listenerCount('acquire').should.equal(1);
+    });
   });
 });
